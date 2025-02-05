@@ -1,0 +1,29 @@
+{
+  "name": "noneasy",
+  "version": "1.0.0",
+  "description": "Biblioteca para encapsular Dynamoose e fornecer verificação automática de campos únicos.",
+  "main": "index.js",
+  "keywords": [
+    "dynamoose",
+    "dynamodb",
+    "unique",
+    "validation",
+    "noSQL"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julio-qa/noneasy.git"
+  },
+  "author": "mail@julio.qa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/julio-qa/noneasy/issues"
+  },
+  "homepage": "https://github.com/julio-qa/noneasy#readme",
+  "dependencies": {
+    "dynamoose": "^4.0.3"
+  }
+}
