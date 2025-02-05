@@ -6,4 +6,4 @@ function model(name, schema, options) {
     return wrapModel(originalModel);
 }
 
-module.exports = { ...dynamoose, model };
+module.exports = { ...dynamoose, model, Schema: dynamoose.Schema };
