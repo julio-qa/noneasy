@@ -6,9 +6,13 @@ const checkUniqueFields = require("./checkUniqueFields");
 function wrapModel(model) {
     return new Proxy(model, {
         get(target, prop) {
+            if (!target.Model || !target.Model.schema) {
+                throw new Error("⚠️ O esquema (schema) do modelo não foi encontrado.");
+            }
+
             if (prop === "create") {
                 return async (data, options) => {
-                    await checkUniqueFields(target, data); // 🚀 Verifica unicidade antes de criar
+                    await checkUniqueFields(target, data); // 🚀 Verificação automática de unicidade
                     return target.create(data, options);
                 };
             }
