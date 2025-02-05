@@ -1,16 +1,5 @@
-/**
- * Verifica automaticamente se um campo com `unique: true` já existe antes de salvar no DynamoDB.
- *
- * @param {Object} model - O modelo do Dynamoose.
- * @param {Object} data - O objeto que será salvo.
- * @returns {Promise<void>} - Retorna erro se houver duplicação.
- */
 async function checkUniqueFields(model, data) {
-    const schema = model.schema;
-
-    if (!schema) {
-        throw new Error("⚠️ O esquema (schema) do modelo não foi encontrado.");
-    }
+    const schema = model.Model.schema;
 
     for (const field in schema.attributes) {
         const attribute = schema.attributes[field];
