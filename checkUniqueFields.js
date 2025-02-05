@@ -12,3 +12,5 @@ async function checkUniqueFields(model, data) {
         }
     }
 }
+
+module.exports = checkUniqueFields;

@@ -1,4 +1,4 @@
-const checkUniqueFields = require("./uniqueCheck");
+const checkUniqueFields = require("./checkUniqueFields");
 
 function wrapModel(model) {
     return new Proxy(model, {
