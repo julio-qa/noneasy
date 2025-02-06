@@ -21,10 +21,6 @@ class Manager {
         }
     }
 
-    /**
-     * @param {string|undefined} tableName
-     * @returns {Promise<DescribeTableCommandOutput>}
-     */
     static describeTable(tableName) {
         Manager.#ensureConfigured();
 
