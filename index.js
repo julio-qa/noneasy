@@ -15,6 +15,15 @@ class Manager {
         Manager.#configured = true;
     }
 
+    static describeTable(tableName) {
+        if (!Manager.#configured) {
+            throw new Error("Connection is not configured. Call Manager.configure() first.");
+        }
+
+        const ddb = dynamoose.aws.ddb();
+        return ddb.describeTable({ TableName: tableName }).promise();
+    }
+
     static define(modelName, schema, options = {}) {
         if (!Manager.#configured) {
             throw new Error("Connection is not configured. Call Model.configure() first.");
