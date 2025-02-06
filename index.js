@@ -21,11 +21,19 @@ class Manager {
         }
     }
 
-    static describeTable(tableName) {
+    static async describeTable(tableName) {
         Manager.#ensureConfigured();
 
         const ddb = dynamoose.aws.ddb();
-        return ddb.describeTable({ TableName: tableName });
+        try {
+            const tableInfo = await ddb.describeTable({ TableName: tableName });
+            return { table: tableInfo.Table, error: null };
+        } catch (error) {
+            if (error.name === "ResourceNotFoundException") {
+                return { table: null, error: "Table not found" };
+            }
+            throw error;
+        }
     }
 
     static define(modelName, schema, options = {}) {
