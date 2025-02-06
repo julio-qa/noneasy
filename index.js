@@ -48,7 +48,8 @@ class Manager {
             },
             delete: async (id) => {
                 return model.delete(id);
-            }
+            },
+            raw: () => model,
         };
 
         Manager.#models[modelName] = modelAPI;
