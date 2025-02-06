@@ -41,8 +41,15 @@ class Manager {
                 const existingItem = await model.get(id);
                 if (!existingItem) throw new Error("Item not found.");
 
-                updateData.update_at = Date.now();
-                const updatedItem = { ...existingItem.toJSON(), ...updateData };
+                /**
+                 * @template T
+                 * @type {T & Partial<T>}
+                 */
+                const updatedItem = {
+                    ...existingItem.toJSON(),
+                    ...updateData,
+                    updatedAt: Date.now(),
+                };
                 return model.update(updatedItem);
             },
             delete: async (id) => {
@@ -69,7 +76,7 @@ class Manager {
         for (const field of uniqueFields) {
             const value = item[field];
             if (value) {
-                const existingItem = await model.scan({ [field]: value }).exec();
+                const existingItem = await model.scan({[field]: value}).exec();
                 if (existingItem.length > 0 && (!excludeId || existingItem[0].id !== excludeId)) {
                     throw new Error(`O valor '${value}' para o campo '${field}' já existe.`);
                 }
@@ -79,4 +86,4 @@ class Manager {
 
 }
 
-module.exports = { Model: Manager };
+module.exports = {Model: Manager};
