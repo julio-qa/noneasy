@@ -11,30 +11,44 @@ npm install noneasy
 
 ### Exemplo com um modelo Dynamoose:
 ```javascript
-const { model, Schema } = require("noneasy");
+const { Manager } = require("noneasy");
 const { v4: uuidv4 } = require("uuid");
 
-const userSchema = new Schema({
+const userSchema = {
     id: {
         type: String,
         hashKey: true,
-        default: () => uuidv4(),
+        readonly: true,
+        default: () => uuid.v4(),
+    },
+    name: {
+        type: String,
+        required: true,
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        index: { global: true },
+        index: { global: true, project: true, },
     },
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        index: { global: true },
+};
+const schemaOption = {
+    timestamps: {
+        createdAt: "created_at",
+        updatedAt: "updated_at"
     },
-});
+};
 
-const User = model("Users", userSchema);
+const awsConfig = {
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    },
+    region: process.env.AWS_DEFAULT_REGION,
+};
+
+Manager.configure(awsConfig);
+const User = Manager.define("Users", userSchema, schemaOption);
 
 async function createUser(userData) {
     try {
