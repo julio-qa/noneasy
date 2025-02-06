@@ -1,6 +1,6 @@
 {
   "name": "noneasy",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Biblioteca para encapsular Dynamoose e fornecer verificação automática de campos únicos.",
   "main": "index.js",
   "keywords": [
