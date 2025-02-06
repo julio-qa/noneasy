@@ -24,7 +24,7 @@ class Manager {
         }
         const schemaInstance = new dynamoose.Schema(schema, options);
         const model = dynamoose.model(modelName, schemaInstance);
-        const modelAPI = {
+        const customMethods = {
             create: async (item) => {
                 await Manager.#checkUniqueFields(model, schema, item);
                 return model.create(item);
@@ -48,8 +48,16 @@ class Manager {
             delete: async (id) => {
                 return model.delete(id);
             },
-            raw: () => model,
         };
+
+        const modelAPI = new Proxy(model, {
+            get(target, prop, receiver) {
+                if (prop in customMethods) {
+                    return customMethods[prop];
+                }
+                return Reflect.get(target, prop, receiver);
+            },
+        });
 
         Manager.#models[modelName] = modelAPI;
         return modelAPI;
