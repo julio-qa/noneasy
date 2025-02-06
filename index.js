@@ -11,12 +11,12 @@
 const dynamoose = require("dynamoose");
 
 class DB {
-    constructor(model, schema, config = {}) {
+    constructor(model, schema, option, config = {}) {
         if (!config.region && !config.accessKeyId && !config.secretAccessKey) {
             throw new Error("Bad AWS config.");
         }
         dynamoose.aws.ddb.set(new dynamoose.aws.ddb.DynamoDB(config));
-        this.schema = new dynamoose.Schema(schema);
+        this.schema = new dynamoose.Schema(schema, option);
         this.model = dynamoose.model(model, this.schema);
 
         this.uniqueFields = Object.keys(schema).filter(
