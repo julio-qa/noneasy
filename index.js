@@ -86,4 +86,4 @@ class Manager {
 
 }
 
-module.exports = {Model: Manager};
+module.exports = {Manager};
