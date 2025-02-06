@@ -42,8 +42,6 @@ class Manager {
                 if (!existingItem) throw new Error("Item not found.");
 
                 const updatedItem = { ...existingItem.toJSON(), ...updateData };
-                await Manager.#checkUniqueFields(model, schema, updatedItem, id);
-
                 return model.update(updatedItem);
             },
             delete: async (id) => {
