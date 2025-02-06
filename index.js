@@ -41,6 +41,7 @@ class Manager {
                 const existingItem = await model.get(id);
                 if (!existingItem) throw new Error("Item not found.");
 
+                updateData.update_at = Date.now();
                 const updatedItem = { ...existingItem.toJSON(), ...updateData };
                 return model.update(updatedItem);
             },
