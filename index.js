@@ -100,7 +100,7 @@ class Manager {
                 if (existingItem.length > 0 && (!excludeId || existingItem[0].id !== excludeId)) {
                     const error = new Error(`O valor '${value}' para o campo '${field}' já existe.`);
                     error.code = "10001";
-                    return error;
+                    throw error;
                 }
             }
         }
