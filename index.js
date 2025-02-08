@@ -98,7 +98,9 @@ class Manager {
             if (value) {
                 const existingItem = await model.scan({[field]: value}).exec();
                 if (existingItem.length > 0 && (!excludeId || existingItem[0].id !== excludeId)) {
-                    throw new Error(`O valor '${value}' para o campo '${field}' já existe.`);
+                    const error = new Error(`O valor '${value}' para o campo '${field}' já existe.`);
+                    error.code = "10001";
+                    throw error;
                 }
             }
         }
